@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDS_Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/style.css" >
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          function loadOptions(selectId, csvFile) {
+              const select = document.getElementById(selectId);
+
+              fetch(csvFile)
+                  .then(response => response.text())
+                  .then(data => {
+                      const rows = data.split('\n');
+                      rows.forEach((row, index) => {
+                          if (index === 0) return; // Skip header row
+                          const [text, value] = row.split(',');
+                          if (text && value !== undefined) {
+                              const opt = document.createElement('option');
+                              opt.value = value.trim();
+                              opt.text = text.replace(/"/g, '').trim();
+                              select.appendChild(opt);
+                          }
+                      });
+                  })
+                  .catch(error => console.error(`Error loading the CSV file for ${selectId}:`, error));
+          }
+
+          loadOptions("job"     , "mapping/job_mapping.csv     ");
+          loadOptions("merchant", "mapping/merchant_mapping.csv");
+          loadOptions("category", "mapping/category_mapping.csv");
+          loadOptions("state"   , "mapping/state_mapping.csv   ");
+      });
+  </script>
+
+
+
+  </head>
+
+  <body>
+    <div class="design">
+      <div class="container2"><div class="logo"></div></div>
+      <div class="vector"></div>
+    </div>
+    
+    <div class="main">
+
+
+
+        <div class="div1">
+          <h1>Transactions Fraud Detection System</h1>
+        </div>
+
+
+        <div class="div1">
+          <form id="fraudForm">
+              <div class="form-div">
+                <div class="half">
+                  <label for="amt">Amount</label> 
+                  <input type="number" id="amt" name="amt" value="5000" step="10" required>
+                </div>
+                <div class="half">
+                  <label for="state">State</label>
+                  <select id="state" name="state" required>
+                    <option value="-1"></option>
+                  </select>
+              </div>
+              </div>
+
+
+
+              <div class="form-div">
+                  <div class="half">
+                      <label for="trans_date">Transaction Date</label>
+                      <input type="date" id="trans_date" name="trans_date" required>
+                  </div>
+                  <div class="half">
+                      <label for="trans_time">Transaction Time</label>
+                      <input type="time" id="trans_time" name="trans_time" step="1" required>
+                  </div>
+              </div>
+
+
+              <div class="form-div">
+                <div class="half">
+                  <label for="job">Job</label>
+                  <select id="job" name="job" required>
+                    <option value="-1"></option>
+                  </select>
+                </div>
+                <div class="half">
+                    <label for="birth_year">Birth Year</label>
+                    <input type="number" id="birth_year" name="birth_year" required>
+                </div>
+              </div>
+
+
+
+              <div class="form-div">
+                <div class="half">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                      <option value="0">Male</option>
+                      <option value="1">Female</option>
+                      <option value="2">Other</option>
+                    </select>
+                </div>
+                <div class="half">
+                  <label for="merchant">Merchant</label>
+                  <select id="merchant" name="merchant" required>
+                    <option value="-1"></option>
+                  </select>
+                </div>
+              </div>
+              
+
+              <div class="form-div">
+                <div class="half">
+                    <label for="category">Category</label>
+                    <select id="category" name="Category" required>
+                      <option value="-1"></option>
+                    </select>
+                </div>
+                <div class="half">
+                  <label for="model">Model</label>
+                  <select id="model" name="model" required>
+                    <option value="random_forest">Random Forest</option>
+                    <option value="random_forest_%">Random Forest (Percentage)</option>
+                    <option value="xgboost">xgboost</option>
+                    <option value="xgboost_%">xgboost (Percentage)</option>
+                    <option value="knn_model">knn_model</option>
+                    <option value="knn_model_%">knn_model (Percentage)</option>
+                    <option value="neural_network">Neural Network</option>
+                    <option value="neural_network_%">Neural Network (Percentage)</option>
+
+                  </select>
+                </div>
+              </div>
+
+          </form>
+        </div>
+        
+
+        <div class="div1">
+          <button type="submit" id="submit">Try it now</button>
+        </div>
+
+
+        <script>
+          document.getElementById('submit').addEventListener('click', async function () {
+              const form = document.getElementById('fraudForm');
+              
+              // Check if all required fields are filled
+              let isValid = true;
+              Array.from(form.elements).forEach(function(element) {
+                  if (element.hasAttribute('required') && !element.value) {
+                      isValid = false;
+                      element.reportValidity(); // Display browser's validation message
+                  }
+              });
+
+                  // Check if default option is selected in select fields
+              const selectFields = ['merchant', 'category', 'job' , 'state' ,];
+              selectFields.forEach(function(fieldName) {
+                  const selectElement = document.getElementById(fieldName);
+                  if (selectElement && selectElement.value === "-1") {
+                      selectElement.setCustomValidity('Please select an option.');
+                      selectElement.reportValidity(); // Display browser's validation message
+                      isValid = false;
+                  }
+              });
+    
+              
+              if (isValid) {
+                  const data = {
+                      amt: parseFloat(form.amt.value),
+                      gender: parseFloat(form.gender.value),
+                      state_encoded: parseFloat(form.state.value),
+                      merchant_encoded: parseFloat(form.merchant.value),
+                      category_encoded: parseFloat(form.category.value),
+                      job_encoded: parseFloat(form.job.value),
+                      birth_year: parseFloat(form.birth_year.value),
+                      trans_date: form.trans_date.value,  // Expecting 'dd-mm-yyyy'
+                      trans_time: form.trans_time.value,  // Expecting 'hh:mm AM/PM'
+                      // model_name: form.model.value,
+                      // output_type: form.output_type.value
+                  };
+                    
+                  const modelValue = form.model.value;
+                  let model_name, output_type;
+                  if (modelValue.endsWith("_%")) {
+                      model_name = modelValue.slice(0, -2); // Remove "_%" from the end
+                      output_type = 'percentage';
+                  } else {
+                      model_name = modelValue;
+                      output_type = 'is_fraud';
+                  }
+                  
+                  data.model_name = model_name;
+                  data.output_type = output_type;
+
+
+
+                  console.log(data);
+
+                  try {
+                      const response = await fetch('http://127.0.0.1:8000/predict', {
+                          method: 'POST',
+                          headers: {
+                              'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify(data)
+                      });
+
+                      const result = await response.json();
+
+
+
+              if (response.ok) {
+                let query;
+                if (output_type === 'percentage') {
+                    query = `fraud_probability=${result.probability || 'N/A'}&is_fraud=${result.is_fraud ? 'Yes' : 'No'}`;
+                } else {
+                    query = `is_fraud=${result.is_fraud ? 'Yes' : 'No'}`;
+                }
+                  window.location.href = `../results-main/index.html/?${query}`;
+              } else {
+                  document.getElementById('submit').innerHTML = `<p>Error: ${result.detail}</p>`;
+              }
+
+
+
+                  } catch (error) {
+                      document.getElementById('submit').innerHTML = `<p>An error occurred: ${error.message}</p>`;
+                  }
+              }
+          });
+
+        </script>
+        
+
+  </body>
+</html>
