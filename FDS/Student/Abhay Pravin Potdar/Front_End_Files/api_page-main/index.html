@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Usage Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333; /* Default text color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #fff; /* Heading color */
+            background-color: #040b55; /* Background color for headings */
+            padding: 10px;
+            margin-top: 0;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            text-align: center;
+        }
+        .block {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #fff7f5; /* Background color for content blocks */
+            border-radius: 4px;
+        }
+        pre {
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            overflow: auto;
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+        button {
+            background-color: #040b55; /* Button background color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            float: right; /* Align the button to the right */
+        }
+        button:hover {
+            background-color: #050e66; /* Slightly darker shade for hover effect */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px; 
+            display: block; /* Ensures the image is centered */
+            margin: 0 auto; /* Centers the image horizontally */
+            border-radius: 4px;
+            margin-bottom: 10px; 
+        }
+        .api-link-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .api-link {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 14px;
+            flex: 1;
+            box-sizing: border-box;
+            border-radius: 4px;
+            margin-right: 10px;
+            color: #333;
+        }
+        .copy-button {
+            background-color: #040b55;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .copy-button:hover {
+            background-color: #050e66;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            button {
+                width: 100%; /* Make button full-width on small screens */
+                padding: 15px;
+                float: none; /* Remove float on smaller screens */
+                margin-top: 10px; /* Add margin top for spacing */
+            }
+        }
+    </style>
+    <script>
+        async function getPrediction() {
+            // Define the URL of the FastAPI endpoint
+            const url = "http://127.0.0.1:8000/predict";
+
+            // Define the input data
+            const data = {
+                "amt": 100.0,
+                "gender": 1.0,
+                "state_encoded": 1.0,
+                "merchant_encoded": 23.0,
+                "category_encoded": 15.0,
+                "job_encoded": 3.0,
+                "birth_year": 1980,
+                "trans_date": "2021-06-01",
+                "trans_time": "12:34:56",
+                "model_name": "random_forest",
+                "output_type": "is_fraud"
+            };
+
+            try {
+                // Make the POST request to the API
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // Get the JSON response
+                const result = await response.json();
+
+                // Display the result
+                document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function copyApiLink() {
+            const apiLinkInput = document.getElementById('api-link');
+            apiLinkInput.select();
+            document.execCommand('copy');
+            alert('API link copied to clipboard!');
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>API Usage Demo</h1>
+
+        <div class="block">
+            <img src="API.png" alt="API Usage Example Image" class="image">
+            <div class="api-link-container">
+                <input type="text" id="api-link" class="api-link" value="https://fsd-v2.onrender.com/predict" readonly>
+                <button class="copy-button" onclick="copyApiLink()">Copy</button>
+            </div>
+            <p>Demonstrating the use our Fraud Detection API. Click the button below to make a sample API call.</p>
+        </div>
+
+        <div class="block">
+            <h2>Js Code<button onclick="getPrediction()" style="background-color:#040b55;color:white;">Get Prediction</button></h2>
+            
+            <pre>
+                <code>
+async function getPrediction() {
+    const url = "https://fsd-v2.onrender.com/predict";
+
+    const data = {
+        "amt": 100.0,
+        "gender": 1.0,
+        "state_encoded": 1.0,
+        "merchant_encoded": 23.0,
+        "category_encoded": 15.0,
+        "job_encoded": 3.0,
+        "birth_year": 1980.0,
+        "trans_date": "2021-06-01",
+        "trans_time": "12:34:56",
+        "model_name": "random_forest",
+        "output_type": "is_fraud"
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+                </code>
+            </pre>
+            
+        </div>
+
+        <div class="block">
+            <h2>Python Code</h2>
+            <pre>
+                <code>
+import requests
+
+url = "https://fsd-v2.onrender.com/predict"
+
+data = {
+    "amt": 100.0,
+    "gender": 1.0,
+    "state_encoded": 1.0,
+    "merchant_encoded": 3.0,
+    "category_encoded": 5.0,
+    "job_encoded": 2.0,
+    "birth_year": 1990.0,
+    "trans_date": "2024-06-03",
+    "trans_time": "14:05:06",
+    "model_name": "random_forest",
+    "output_type": "percentage"
+}
+
+response = requests.post(url, json=data)
+
+if response.status_code == 200:
+    print("Request successful!")
+    print("Response data:", response.json())
+else:
+    print(f"Request failed with status code: {response.status_code}")
+    print("Response:", response.text)
+                </code>
+            </pre>
+        </div>
+    </div>
+</body>
+</html>
+

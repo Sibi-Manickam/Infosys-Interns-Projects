@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fraud Detection and Assistance</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+        font-family: "Merriweather", serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    header {
+        background-color: #020b58;
+        color: white;
+        padding: 10px 0;
+        text-align: center;
+        font: "CM Sans Serif 2012 Medium";
+    }
+
+    .submit-btn {
+        background-color: #040b55;
+    }
+
+    .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+        padding: 20px;
+        background: #fff7f5;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    .section {
+        margin: 20px 0;
+    }
+
+    .section p {
+        font-size: 1.1em;
+        line-height: 1.6em;
+    }
+
+    .section .feedback-form input,
+    .section .feedback-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .section .feedback-form button {
+        display: block;
+        width: 100%;
+        background-color: #020b58;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 1.1em;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .section .feedback-form button:hover {
+        background-color: #020b58;
+    }
+
+    .helplines ul {
+        list-style: disc;
+        padding-left: 20px;
+    }
+
+    .helplines a {
+        color: #020b58;
+        text-decoration: none;
+    }  
+
+    .merriweather-bold {
+        font-family: "Merriweather", serif;
+        font-weight: 700;
+        font-style: normal;
+    }
+  </style>
+</head>
+<body>
+
+    <header class="text-white body-font flex flex-wrap items-center justify-between py-6 px-6">
+        <div class="flex items-center">
+            <a href="#" class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
+                <span class="text-xl">Fraud Detection and Assistance</span>
+            </a>
+        </div>
+        <nav class="md:ml-auto flex flex-wrap items-center text-base">
+            <a href="https://dev-s-t.github.io/FSD_landing/" class="mr-5 hover:text-gray-100">Home</a>
+            <a href="#feedback" class="mr-5 hover:text-gray-100">Feedback</a>
+            <a href="#helplines" class="mr-5 hover:text-gray-100">Helpline Numbers</a>
+            <a href="#issues" class="mr-5 hover:text-gray-100">Report Issues</a>
+        </nav>
+    </header>
+    <section class="text-gray-600 body-font">
+        <div class="container mx-auto flex px-5 py-6 md:flex-row flex-col items-center">
+            <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+                <img class="object-cover object-center rounded" alt="hero" src="fraud5.png" height="300" width="300">
+            </div>
+            <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-2 md:mb-0 items-center text-center">
+                <h1 class="title-font sm:text-4xl text-3xl mb-2 font-medium text-gray-700">Probability of transaction being fraudulent
+                    <br class="hidden lg:inline-block">
+                </h1>
+                <div id="result" class="mb-4 leading-relaxed"></div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="feedback" class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-col px-5 py-20 items-center justify-center">
+            <div class="lg:w-2/3 w-full mb-8">
+                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 text-center">Feedback</h1>
+                <p class="mb-2 leading-relaxed text-center">Please add your valuable feedback on the performance and accuracy of the fraud detection model we've built. Your insights will help us refine and improve the model for better results.</p>
+            </div>
+            <div class="lg:w-2/6 md:w-1/2 rounded-lg p-6 flex flex-col w-full mt-6 md:mt-0" style="background-color: #020b58;">
+                <div class="flex justify-center mb-4">
+                    <img src="feedback.webp" alt="Feedback Form" class="h-auto w-64">
+                </div>
+                <h2 class="text-white text-lg font-medium title-font mb-3">Enter your feedback</h2>
+                <div class="relative mb-2">
+                    <label for="full-name" class="leading-7 text-sm text-white">Full Name</label>
+                    <input type="text" id="full-name" name="full-name" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                </div>
+                <div class="relative mb-2">
+                    <label for="email" class="leading-7 text-sm text-white">Email</label>
+                    <input type="email" id="email" name="email" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                </div>
+                <div class="relative mb-2">
+                    <label for="feedback" class="leading-7 text-sm text-white">Feedback</label>
+                    <input type="text" id="feedback" name="feedback" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                </div>
+                <button class="text-white bg-white border-2 border-white py-2 px-8 focus:outline-none hover:bg-blue-800 hover:text-white rounded-lg text-lg" style="border-color: #040b55; color: #040b55;">Submit</button>
+                <p class="text-xs text-white mt-3">Thank you for giving your valuable feedback. We appreciate it!</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="helplines" class="text-gray-600 body-font">
+        <div class="container px-5 py-12 mx-auto">
+            <div class="flex flex-wrap justify mb-10">
+                <h1 class="title-font font-medium text-3xl text-gray-900"> Helpline Numbers </h1>
+            </div>
+            <p class="mb-4 leading-relaxed">Report online financial fraud on National CyberCrime Helpline Number: 1930.</p>
+            <div class="flex flex-wrap justify-around">
+                <div class="w-full md:w-1/3 px-4 mb-10 md:mb-0">
+                    <nav class="list-none">
+                        <li><span style="color: #040b55; font-weight: bold;">Delhi :</span> 011-20892633</li>
+                        <li><span style="color: #040b55; font-weight: bold;">Maharashtra :</span> 022-22160080</li>
+                        <li><span style="color: #040b55; font-weight: bold;">Telangana :</span> 040-29320049</li>
+                        <li><span style="color: #040b55; font-weight: bold;">Gujarat :</span> 079-23250798</li>
+                        <li><span style="color: #040b55; font-weight: bold;">Andhra Pradesh :</span> 8331043255</li>
+                    </nav>
+                </div>
+                <div class="w-full md:w-1/3 px-4 mb-10 md:mb-0">
+                    <nav class="list-none">
+                        <li><span style="color: #040b55; font-weight: bold;">Uttar Pradesh :</span> 0522-2390538</li>
+                        <li><span style="color: #040b55; font-weight: bold;">Assam :</span> 0361-2521618</li>
+                        <li><span style="color: #040b55; font-weight: bold;">Rajasthan :</span> 01412821741</li>
+                        <li><span style="color: #040b55; font-weight: bold;">Odisha :</span> 0674-2913100</li>
+                        <li><span style="color: #040b55; font-weight: bold;">West Bengal :</span> 033-69061000</li>
+                    </nav>
+                </div>
+                <div class="w-full md:w-1/3 px-4 mb-10 md:mb-0">
+                    <nav class="list-none">
+                        <li><span style="color: #040b55; font-weight: bold;">Punjab :</span> 0172-2226258</li>
+                        <li><span style="color: #040b55; font-weight: bold;">Tamil Nadu :</span> 044-29580300</li>
+                        <li><span style="color: #040b55; font-weight: bold;">Madhya Pradesh :</span> 0755-2770248</li>
+                        <li><span style="color: #040b55; font-weight: bold;">Kerala :</span> 0471-2722215</li>
+                        <li><span style="color: #040b55; font-weight: bold;">Jharkhand :</span> 0651-2220060</li>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <section id="issues" class="text-gray-600 body-font">
+        <div class="container px-5 flex flex-wrap mx-auto items-center">
+            <div class="flex md:flex-nowrap flex-wrap justify-center items-center md:justify-start w-full">
+                <div class="relative w-40 sm:w-64 mr-4">
+                    <img src="Report issue.png" height="200" width="200" alt="Report Issue">
+                </div>
+                <div class="flex flex-col w-full md:w-auto">
+                    <h1 class="title-font font-medium text-3xl text-gray-900 mb-2">Report Issues</h1>
+                    <input type="text" id="footer-field" name="footer-field" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-blue-200 focus:border-blue-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out mb-2">
+                    <button class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded" style="background-color: #040b55;">Submit</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        // Function to get query parameters
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const regex = /([^&=]+)=([^&]*)/g;
+            let match;
+            while ((match = regex.exec(queryString))) {
+                params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
+            }
+            return params;
+        }
+
+        // // Function to display result
+        // function displayResult() {
+        //     const params = getQueryParams();
+        //     const fraudProbability = params.fraud_probability || 'N/A';
+        //     const isFraud = params.is_fraud || 'N/A';
+        //     document.getElementById('result').innerHTML = `There is <b>${fraudProbability}</b> chance that the transaction is fraud.`;
+        // }
+
+
+        // Function to display result
+        function displayResult() {
+            const params = getQueryParams();
+            const fraudProbability = params.fraud_probability;
+            const isFraud = params.is_fraud || 'N/A';
+
+            if (fraudProbability !== undefined) {
+                document.getElementById('result').innerHTML = `There is <b>${fraudProbability}</b> chance that the transaction is fraud.`;
+            } else {
+                const fraudMessage = isFraud === 'Yes' ? 'The transaction is likely to be fraudulent.' : 'The transaction is not likely to be fraudulent.';
+                document.getElementById('result').innerHTML = fraudMessage;
+            }
+        }
+
+
+        // Call displayResult on page load
+        window.onload = displayResult;
+    </script>
+    
+</body>
+</html>
+

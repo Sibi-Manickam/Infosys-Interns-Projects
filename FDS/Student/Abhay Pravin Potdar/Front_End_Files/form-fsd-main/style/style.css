@@ -1,0 +1,230 @@
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+}
+
+.design{
+    background-color: #000C61;
+    height: 100vh;
+    color:white;
+    width: 35vw;
+    padding:5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 10vh;
+}
+
+.container2{
+    height:5em;
+    width: 10em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.logo{
+    height:3.3vw;
+    width: 10vw;
+    background: url(FDS.svg);
+    background-size: cover;
+    background-position: center;
+}
+
+
+.vector{
+    height:18vw;
+    width: 100%;
+    background: url(flat-girl-with-magnifying-glass-scanning-check-news-smartphone-spreading-fake-news-concept-hoax-internet-social-media-untruth-information-spread.png);
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+
+
+.main{
+    background-color: white;
+    height: 100vh;
+    width: 65vw;
+    padding: 5vh 5vw 5vh 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    /* row-gap: 2em; */
+    
+}
+
+
+.div1{
+
+    color: #000C61;
+    width: 100%;
+    padding: 0 5vw 0 5vw;
+    font-family: "Roboto Slab";
+    font-size: 1em;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 2em; 
+    letter-spacing: -0.05rem;
+
+/* background-color: rgb(207, 224, 223); */
+/* 
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 2em; */
+}
+
+
+h1{
+    color: #000C61;
+    font-family: "Roboto Slab";
+    font-size: 2.5em;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%; /* 2.75rem */
+    letter-spacing: -0.05rem;
+}
+
+form{
+    overflow-y: auto;
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    column-gap: 2em;
+    /* background-color: rgb(24, 77, 8); */
+}
+
+.form-div{
+    margin-bottom: 1vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: rgb(131, 157, 123); */
+}
+
+
+.half{
+    display: flex;
+    width: 48%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.375em;
+    /* background-color: rgb(106, 209, 237); */
+}
+
+label{
+    display: flex;
+    padding: 0.125rem 0.5rem 0.125rem 0rem;
+    align-items: center;
+    gap: 0.5rem;
+    align-self: stretch;
+
+
+    color: #000C61;
+    font-family: "Roboto Slab";
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%; /* 1.2375rem */
+    letter-spacing: -0.0225rem;
+}
+
+
+input, select{
+    width: 100%;
+    padding: 10px;
+
+    color: #007DF3;
+
+    font-family: "Roboto Slab";
+    font-size: 1.125em;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%; /* 1.2375rem */
+    letter-spacing: -0.0225rem;
+
+    border-radius: 0.5rem;
+    border: 1px solid #FFD7F0;
+}
+
+button{
+    /* width: 100%;
+    padding: 10px;
+
+    color: #000C61;
+
+    font-family: "Roboto Slab";
+    font-size: 1.125em;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%; 
+    letter-spacing: -0.0225rem;
+
+    border-radius: 0.5rem;
+    border: 2px solid #FFD7F0;
+    background-color: #FFD7F0; */
+
+
+
+
+    display: flex;
+    width: 45vw;
+    padding: 1em 5.53125em;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    border-radius: 2em;
+    background: #001998;
+
+
+
+    color: #FFF;
+    text-align: center;
+    font-family: "Roboto Slab";
+    font-size: 1.5em;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 50%;
+    text-shadow: 3px 3px 3px rgba(80, 134, 251, 0.806);
+
+
+
+}
+button:hover {
+    background-color: #4346ff;
+}
+
+/* .input, select:hover{
+    background-color:#001cf35b;
+} */
+
+.result {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}

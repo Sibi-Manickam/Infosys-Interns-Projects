@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Classification</title>
+    <style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('https://treeplantation.com/images/articles/tree-leaves.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+  }
+
+  .background-blur {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      filter: blur(5px);
+      z-index: -1;
+  }
+
+  .container {
+      max-width: 750px;
+      margin: 60px auto;
+      padding: 30px 20px;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      border-radius: 15px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+  }
+
+  header {
+      text-align: center;
+      padding: 20px 0;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+  }
+
+  h1 {
+      margin-bottom: 15px;
+      font-size: 2.5em;
+      color: #2c3e50;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  h2 {
+      font-size: 2em;
+      color: #2c3e50;
+  }
+
+  p, ul, li {
+      font-size: 1.1em;
+      text-align: left;
+      margin-bottom: 15px;
+      line-height: 1.5;
+  }
+
+  nav ul {
+      padding: 0;
+      list-style: none;
+      display: flex;
+      justify-content: center;
+  }
+
+  nav li {
+      margin: 0 15px;
+  }
+
+  nav a {
+      color: #2c3e50;
+      text-decoration: none;
+      font-size: 1.1em;
+  }
+
+  .prediction input[type="file"],
+  .prediction input[type="submit"] {
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      width: 100%;
+      max-width: 350px;
+  }
+
+  .prediction input[type="submit"] {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.3s;
+  }
+
+  .prediction input[type="submit"]:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+  }
+
+  .footer {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #555;
+      text-align: center;
+  }
+
+  .header-background {
+      font-weight: bold;
+      border-radius: 0 0 100px 100px;
+      padding: 10px 0px 10px 20px;
+      margin: 0 22% 0 22%;
+      top: 0;
+  }
+    </style>
+</head>
+<body>
+    <header class="header-background" style="margin-top:0;">
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#dataset">Dataset</a></li>
+                <li><a href="#model">Model</a></li>
+                <li><a href="#training">Training</a></li>
+                <li><a href="#prediction">Prediction</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="background-blur"></div>
+    <div class="container">
+        <section id="about">
+	    <h1>Plant Disease Classification</h1>
+	    <hr>
+            <h2>About the Project</h2>
+            <p>This project focuses on the classification of potato leaf diseases using a convolutional neural network (CNN) implemented in TensorFlow and Keras. The model is designed to predict three distinct classes of potato leaf conditions: early blight, late blight, and healthy leaves. The aim is to provide an efficient tool for farmers and agricultural experts to quickly and accurately diagnose plant diseases, which can significantly aid in timely and effective treatment, potentially improving crop yields and reducing losses.</p>
+        </section>
+
+        <section id="dataset">
+            <h2>Dataset Information</h2>
+            <p>The dataset used for this project is sourced from the PlantVillage repository available on Kaggle. The dataset is approximately 350 MB in size and contains images of potato leaves categorized into three classes:</p>
+            <ul>
+                <li><strong>Early Blight:</strong> Images showing symptoms of early blight disease.</li>
+                <li><strong>Late Blight:</strong> Images showing symptoms of late blight disease.</li>
+                <li><strong>Healthy:</strong> Images of healthy potato leaves.</li>
+            </ul>
+            <p>The dataset is structured in a way that allows easy access and processing using TensorFlow's image data pipeline. The images are pre-processed to ensure they are of uniform size and are normalized to improve the model's performance.</p>
+        </section>
+
+        <section id="model">
+            <h2>Model Architecture</h2>
+            <p>The CNN model consists of several convolutional layers followed by max-pooling layers, which help in feature extraction from the images. The layers are organized as follows:</p>
+            <ul>
+                <li><strong>Resizing and Rescaling:</strong> The input images are resized to 256x256 pixels and rescaled to a [0, 1] range.</li>
+                <li><strong>Data Augmentation:</strong> Random flipping and rotation are applied to the images to increase the diversity of the training data.</li>
+                <li><strong>Convolutional Layers:</strong> Six convolutional layers with increasing filter sizes (32 and 64) and ReLU activation functions.</li>
+                <li><strong>Max-Pooling Layers:</strong> Each convolutional layer is followed by a max-pooling layer to reduce the spatial dimensions of the feature maps.</li>
+                <li><strong>Flattening Layer:</strong> Converts the 2D feature maps into a 1D vector.</li>
+                <li><strong>Dense Layers:</strong> A dense layer with 64 neurons and ReLU activation, followed by the output layer with 3 neurons and softmax activation for classification.</li>
+            </ul>
+        </section>
+
+        <section id="training">
+            <h2>Training and Evaluation</h2>
+            <p>The model is trained for 10 epochs using the Adam optimizer and sparse categorical cross-entropy loss function. The dataset is split into training, validation, and test sets with an 80-10-10 ratio. The training process involves fitting the model on the training data and validating it on the validation data. After training, the model is evaluated on the test set to determine its accuracy and performance.</p>
+        </section>
+
+        <section id="prediction">
+            <h2>Prediction Function</h2>
+            <p>A custom prediction function is implemented to classify new images. The function preprocesses the input image, makes a prediction using the trained model, and returns the predicted class along with the confidence level.</p>
+            <div class="prediction">
+                <p><strong>Upload an image of your plant to detect possible diseases.</strong></p>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <input type="submit" value="Predict Disease">
+        </form>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p style="text-align: center;">&copy; Team-4 [Amit, Rakshita, Tanishk]</p>
+        </footer>
+    </div>
+</body>
+</html>

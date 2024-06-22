@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://th.bing.com/th/id/R.4d5567684bacbb3eff37f1ce87976d2c?rik=B7D1EGGsg7DNMw&riu=http%3a%2f%2fwonderfulengineering.com%2fwp-content%2fuploads%2f2014%2f09%2fGreen-Wallpaper-27.jpg&ehk=JUEBt8nJLtpXtDAobK5xsHkBwbnglRObZ5fMNVimgPQ%3d&risl=&pid=ImgRaw&r=0');
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            min-height: 250px;
+            width: 450px;
+            border-radius: 1rem;
+            background: rgb(255, 255, 255, 0.3);
+            padding: 1.5rem;
+            color: #fff;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            color: #0b4204;
+            text-align: justify;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Disease Details: {{ disease }}</h1>
+        <p>
+            {% if disease == 'Apple___Apple_scab' %}
+                Apple scab is a disease of apple trees (Malus spp.) caused by the ascomycete fungus Venturia inaequalis. It results in dark, scabby lesions on leaves, fruit, and sometimes young twigs.
+            {% elif disease == 'Apple___Black_rot' %}
+                Black rot is a fungal disease of apple trees (Malus spp.) caused by the fungus Botryosphaeria obtusa. It can cause fruit rot, leaf spot, and canker on branches.
+            {% elif disease == 'Apple___Cedar_apple_rust' %}
+                Cedar apple rust is a fungal disease caused by Gymnosporangium juniperi-virginianae. It requires both juniper and apple trees to complete its life cycle.
+            {% elif disease == 'Apple___healthy' %}
+                The apple is healthy and free from common diseases.
+            {% elif disease == 'Cherry___healthy' %}
+                The cherry is healthy and free from common diseases.
+            {% elif disease == 'Cherry___Powdery_mildew' %}
+                Powdery mildew on cherry is caused by the fungus Podosphaera clandestina. It appears as white powdery spots on leaves, stems, and buds.
+            {% elif disease == 'Corn___Cercospora_leaf_spot Gray_leaf_spot' %}
+                Gray leaf spot is caused by the fungus Cercospora zeae-maydis. It produces tan to gray lesions on the leaves, reducing photosynthetic capacity and yield.
+            {% elif disease == 'Corn___Common_rust' %}
+                Common rust is caused by the fungus Puccinia sorghi. It produces reddish-brown pustules on the leaves, which can coalesce and cause leaf death.
+            {% elif disease == 'Corn___healthy' %}
+                The corn plant is healthy and free from common diseases.
+            {% elif disease == 'Corn___Northern_Leaf_Blight' %}
+                Northern leaf blight is caused by the fungus Exserohilum turcicum. It produces long, elliptical grayish-green lesions on the leaves.
+            {% elif disease == 'Grape___Black_rot' %}
+                Black rot of grape is caused by the fungus Guignardia bidwellii. It causes dark, sunken lesions on leaves, shoots, and fruit.
+            {% elif disease == 'Grape___Esca_(Black_Measles)' %}
+                Esca, also known as Black Measles, is a disease complex caused by several fungi. It leads to dark, striping patterns on leaves and dark, sunken lesions on fruit.
+            {% elif disease == 'Grape___healthy' %}
+                The grape plant is healthy and free from common diseases.
+            {% elif disease == 'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)' %}
+                Leaf blight, caused by the fungus Pseudocercospora vitis, results in irregular, brown lesions on leaves.
+            {% elif disease == 'Peach___Bacterial_spot' %}
+                Bacterial spot, caused by Xanthomonas campestris pv. pruni, results in small, water-soaked, angular spots on leaves and fruit.
+            {% elif disease == 'Peach___healthy' %}
+                The peach tree is healthy and free from common diseases.
+            {% elif disease == 'Strawberry___healthy' %}
+                The strawberry plant is healthy and free from common diseases.
+            {% elif disease == 'Strawberry___Leaf_scorch' %}
+                Leaf scorch on strawberry is caused by the fungus Diplocarpon earliana. It appears as irregular, dark purple spots on leaves.
+            {% else %}
+                No details available for this disease.
+            {% endif %}
+        </p>
+        <a href="/">Go Back</a>
+    </div>
+</body>
+</html>
