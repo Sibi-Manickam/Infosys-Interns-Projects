@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Energy Consumption Forecasting</title>
+    <link rel="icon" href="{{ url_for('static', filename='Images/flash.png') }}" type="image/png">
+    <style>
+        html, body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('{{ url_for("static", filename="Images/bg3.jpg") }}');
+            background-color: #fff;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+            height: 100%;
+            overflow-x: hidden;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .navbar-logo {
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .navbar-logo img {
+            width: 30px; /* Adjust the width of the logo image */
+            margin-right: 10px; /* Add some spacing between the logo and text */
+        }
+
+        .navbar-links ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar-links ul li {
+            margin: 0 15px;
+        }
+
+        .navbar-links ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .fa-atom {
+            margin-right: 5px;
+        }
+        
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-link {
+            color: #fff; /* White color for links */
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            margin-left: 20px; /* Adjust the margin between links */
+        }
+
+        .nav-link:hover {
+            color: #ddd; /* Lighter color on hover */
+        }
+        .container {
+            max-width: 800px;
+            margin: 100px auto 50px auto;
+            background-color: rgba(255, 255, 255, 1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            color: #050811;
+        }
+
+        .plot {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .plot:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        .metrics {
+            margin-top: 20px;
+        }
+
+        .metric {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .metric label {
+            font-weight: bold;
+            color: #040404;
+        }
+
+        .metric span {
+            color: #333;
+        }
+
+        .model-label {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #0b529d;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .button:hover {
+            background-color: #0a3d6f;
+        }
+
+        .container {
+            display: none;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #model-container {
+            margin-bottom: 10px;
+        }
+
+        #model-select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        button {
+            display: block;
+            margin: 10px auto 0;
+            padding: 10px 20px;
+            background-color: #0b529d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #0a3d6f;
+        }
+
+        .intro-container {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            max-width: 1100px;
+            margin-top: 100px;
+        }
+
+        .dashboard-container {
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            max-width: 800px;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <img src="{{ url_for('static', filename='/Images/flash.png') }}" alt="Energy Icon">
+            Energy Consumption Forecasting System
+        </div>
+        <div class="navbar-links">
+            <ul>
+                <li><a href="#" id="home-link" class="nav-link active" onclick="showSection('home')">Home</a></li>
+                <li><a href="https://colab.research.google.com/drive/1Pdk_8eH0adRpK48fwHCyyYBglRgyjY-5?usp=sharing" class="nav-link" target="_blank">Code</a></li>
+                <li><a href="#" id="about-link" class="nav-link" onclick="showSection('about')">About</a></li>
+            </ul>
+        </div>
+    </nav>  
+
+    <div class="intro-container" id="intro-container">
+        <h1>What is Energy Consumption Forecasting?</h1>
+        <p style="text-align: center; margin-bottom: 20px; font-size: 20px; line-height: 25px;">
+            Energy consumption forecasting is the process of predicting future energy usage based on historical data, current trends, and other relevant factors. It involves analyzing patterns and variables to estimate the amount of energy that will be consumed over a specific period, typically ranging from hours to years. Techniques such as statistical methods, machine learning, and hybrid models are utilized, often incorporating weather forecasts for accuracy. Applications include load management, demand response, smart grids, and energy trading, all contributing to a more efficient and sustainable energy ecosystem.
+        </p>
+        <div class="button-container">
+            <a href="/detailed_info" class="button" target="_blank">Detailed Info About the Project</a>
+        </div> 
+    </div>
+
+    <div class="dashboard-container" id="dashboard-container">
+        <h1>Energy Consumption Dashboard</h1>
+        <div class="button-container">
+            <div id="model-container">
+                <select id="model-select">
+                    <option value="" selected disabled>Select Your Model</option>
+                    <option value="rf">Random Forest Regressor Model</option>
+                    <option value="nn">Neural Network Model</option>
+                    <option value="lstm">LSTM Model</option>
+                    <option value="lr">Linear Regression Model</option>
+                </select>
+            </div>
+            <button onclick="showModelContainer()">Get Prediction</button>
+        </div>
+    </div>
+
+    <div class="container" id="rf-container">
+        <h1>Actual vs. Predicted Energy Consumption</h1>
+        <h2>Random Forest Regressor Model</h2>
+        <img class="plot" src="{{ url_for('plot_rf') }}" alt="Plot">
+        <div class="metrics">
+            <h3>Evaluation Metrics</h3>
+            <div class="metric">
+                <label>Root Mean Squared Error (RMSE):</label>
+                <span>{{ rmse['rf'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Mean Absolute Error (MAE):</label>
+                <span>{{ mae['rf'] }}</span>
+            </div>
+            <div class="metric">
+                <label>R-squared (R²):</label>
+                <span>{{ r2['rf'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Mean Absolute Percentage Error (MAPE):</label>
+                <span>{{ mape['rf'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Explained Variance Score:</label>
+                <span>{{ explained_variance['rf'] }}</span>
+            </div>
+        </div>
+        <p class="model-label">Model Used: RandomForest Regressor</p>
+    </div>
+
+    <div class="container" id="nn-container">
+        <h1>Actual vs. Predicted Energy Consumption</h1>
+        <h2>Neural Network Model</h2>
+        <img class="plot" src="{{ url_for('plot_nn') }}" alt="Plot">
+        <div class="metrics">
+            <h3>Evaluation Metrics</h3>
+            <div class="metric">
+                <label>Root Mean Squared Error (RMSE):</label>
+                <span>{{ rmse['nn'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Mean Absolute Error (MAE):</label>
+                <span>{{ mae['nn'] }}</span>
+            </div>
+            <div class="metric">
+                <label>R-squared (R²):</label>
+                <span>{{ r2['nn'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Mean Absolute Percentage Error (MAPE):</label>
+                <span>{{ mape['nn'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Explained Variance Score:</label>
+                <span>{{ explained_variance['nn'] }}</span>
+            </div>
+        </div>
+        <p class="model-label">Model Used: Neural Network</p>
+    </div>
+
+    <div class="container" id="lstm-container">
+        <h1>Actual vs. Predicted Energy Consumption</h1>
+        <h2>LSTM Model</h2>
+        <img class="plot" src="{{ url_for('plot_lstm') }}" alt="Plot">
+        <div class="metrics">
+            <h3>Evaluation Metrics</h3>
+            <div class="metric">
+                <label>Root Mean Squared Error (RMSE):</label>
+                <span>{{ rmse['lstm'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Mean Absolute Error (MAE):</label>
+                <span>{{ mae['lstm'] }}</span>
+            </div>
+            <div class="metric">
+                <label>R-squared (R²):</label>
+                <span>{{ r2['lstm'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Mean Absolute Percentage Error (MAPE):</label>
+                <span>{{ mape['lstm'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Explained Variance Score:</label>
+                <span>{{ explained_variance['lstm'] }}</span>
+            </div>
+        </div>
+        <p class="model-label">Model Used: LSTM</p>
+    </div>
+
+    <div class="container" id="lr-container" >
+        <h1>Actual vs. Predicted Energy Consumption</h1>
+        <h2>Linear Regression Model</h2>
+        <img class="plot" src="{{ url_for('plot_lr') }}" alt="Plot">
+        <div class="metrics">
+            <h3>Evaluation Metrics</h3>
+            <div class="metric">
+                <label>Root Mean Squared Error (RMSE):</label>
+                <span>{{ rmse['lr'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Mean Absolute Error (MAE):</label>
+                <span>{{ mae['lr'] }}</span>
+            </div>
+            <div class="metric">
+                <label>R-squared (R²):</label>
+                <span>{{ r2['lr'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Mean Absolute Percentage Error (MAPE):</label>
+                <span>{{ mape['lr'] }}</span>
+            </div>
+            <div class="metric">
+                <label>Explained Variance Score:</label>
+                <span>{{ explained_variance['lr'] }}</span>
+            </div>
+        </div>
+        <p class="model-label">Model Used: Linear Regression</p>
+    </div>
+
+    <script>
+        // Function to show the selected model container
+        function showModelContainer() {
+            var select = document.getElementById("model-select");
+            var value = select.options[select.selectedIndex].value;
+
+            // Hide all containers
+            var containers = document.getElementsByClassName("container");
+            for (var i = 0; i < containers.length; i++) {
+                containers[i].style.display = "none";
+            }
+
+            // Show the selected container
+            document.getElementById(value + "-container").style.display = "block";
+        }
+
+        // Function to toggle sections based on navigation
+        function showSection(section) {
+            var introContainer = document.getElementById("intro-container");
+            var dashboardContainer = document.getElementById("dashboard-container");
+
+            if (section === 'home') {
+                introContainer.style.display = "none";
+                dashboardContainer.style.display = "block";
+            } else if (section === 'about') {
+                introContainer.style.display = "block";
+                dashboardContainer.style.display = "none";
+                // Hide the selected model container
+                var select = document.getElementById("model-select");
+                var value = select.options[select.selectedIndex].value;
+                document.getElementById(value + "-container").style.display = "none";
+            }
+        }
+
+        // Set initial visibility
+        showSection('home');
+    </script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Info</title>
+    <link rel="icon" href="{{ url_for('static', filename='Images/green-energy.png') }}" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(
+  45deg,
+  hsl(240deg 100% 20%) 0%,
+  hsl(289deg 100% 21%) 11%,
+  hsl(315deg 100% 27%) 22%,
+  hsl(329deg 100% 36%) 33%,
+  hsl(337deg 100% 43%) 44%,
+  hsl(357deg 91% 59%) 56%,
+  hsl(17deg 100% 59%) 67%,
+  hsl(34deg 100% 53%) 78%,
+  hsl(45deg 100% 50%) 89%,
+  hsl(55deg 100% 50%) 100%
+);
+        }
+
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: #08090A;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 10px;
+        }
+        main {
+            padding: 20px;
+        }
+        .section-block {
+            margin: 50px auto 50px auto;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+        }
+        h2 {
+            color: #222823;
+        }
+        h3 {
+            color: #008CBA;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        p {
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            margin-top: 100px;
+            opacity: 0.95;
+        }
+        .plot-image {
+            text-align: center;
+        }
+        .analytics-images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .analytics-images img {
+            margin: 10px;
+        }
+        .heading {
+            text-align: center;
+            color: #08090A;
+            margin-top: 50px;
+            font-size: 30px;
+        }
+        section:last-child {
+            margin-bottom: 100px;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <header>
+        <h1>Energy Consumption Forecasting Project</h1>
+    </header>
+    <main>
+        <section id="project-overview" class="section-block">
+            <h2>Project Overview</h2>
+            <p>
+                The Energy Consumption Forecasting Project aims to predict energy consumption patterns
+                based on historical data. By analyzing various factors such as geographical location, 
+                time of day, day of the week, and seasonal trends, the project seeks to provide accurate 
+                forecasts to help optimize energy resource allocation and management.
+            </p>
+            <h3>Objectives</h3>
+            <ul>
+                <li>Develop predictive models to forecast energy consumption accurately.</li>
+                <li>Identify and analyze key factors influencing energy usage patterns.</li>
+                <li>Evaluate the performance of different machine learning algorithms for energy forecasting.</li>
+                <li>Provide actionable insights for policymakers and energy stakeholders to optimize resource allocation.</li>
+            </ul>
+            <h3>Impact</h3>
+            <p>
+                The successful implementation of this project is expected to have significant positive impacts,
+                including:
+            </p>
+            <ul>
+                <li>Improved energy resource planning and management.</li>
+                <li>Enhanced efficiency in energy distribution and consumption.</li>
+                <li>Reduction of energy wastage and associated costs.</li>
+                <li>Contribution to sustainable development goals through better utilization of renewable energy sources.</li>
+            </ul>
+            <h3>Dataset</h3>
+            <p>
+                The project utilizes a dataset containing historical records of energy consumption 
+                across various states and regions. The dataset includes information such as date and 
+                time of consumption, geographical coordinates, state, region, and energy usage.
+            </p>
+            <p>
+                <a href="https://drive.google.com/file/d/10X_3rXLsfxrGCncdEfHAVycwvvJqqfTM/view?usp=drive_link" target="_blank">Download Dataset</a>
+            </p>
+            <div>
+                <!-- <h4>Dataset Snapshot</h4> -->
+                <!-- <img src="/static/Images/dataset1.png" alt="Dataset Snapshot" width="600"> -->
+                <!-- <p>
+                    The image above provides a snapshot of the dataset structure, including columns such as Date, Time, 
+                    Latitude, Longitude, State, Region, and Energy Usage.
+                </p> -->
+            </div>
+        </section>
+
+        <section id="data-preprocessing" class="section-block">
+            <h2>Data Preprocessing</h2>
+            <p>
+                Before building predictive models, it's crucial to preprocess the dataset to ensure 
+                data quality and compatibility with machine learning algorithms. This section outlines 
+                the steps taken to clean and prepare the dataset for analysis.
+            </p>
+            <h3>Data Cleaning</h3>
+            <p>
+                The dataset underwent several cleaning steps to handle missing values and eliminate duplicates:
+            </p>
+            <ul>
+                <li>Removed duplicate records to ensure data integrity.</li>
+                <li>Handled missing values by dropping rows with null values.</li>
+            </ul>
+            <h3>Feature Engineering</h3>
+            <p>
+                Feature engineering involves creating new features or transforming existing ones to enhance 
+                the predictive power of machine learning models. Here are the key feature engineering steps:
+            </p>
+            <ul>
+                <li>Converted the 'Dates' column to datetime format to facilitate temporal analysis.</li>
+                <li>Clustered geographical coordinates using KMeans algorithm to identify spatial patterns.</li>
+                <li>Extracted temporal features such as day of the week, month, year, and season from the 'Dates' column.</li>
+                <li>Calculated historical average usage for each state-month combination to capture seasonal trends.</li>
+                <li>Classified days as either weekdays or weekends based on the day of the week.</li>
+                <li>Encoded categorical features like states and regions using one-hot encoding for model compatibility.</li>
+            </ul>
+            <!-- <h3>Dataset After Preprocessing</h3> -->
+            <!-- <p>
+                Below is an image showing the dataset after preprocessing and feature engineering:
+            </p> -->
+            <!-- <img src="/static/Images/dataset2.png" alt="Preprocessed Dataset" width="1200"> -->
+            <!-- <p>
+                The image illustrates the transformed dataset with additional features derived from the original data.
+            </p> -->
+        </section>        
+        
+        
+        <section id="data-analysis" class="section-block">
+            <h2>Data Analysis</h2>
+            <p>
+                Data analysis plays a crucial role in understanding patterns, trends, and relationships within the dataset. 
+                This section presents a comprehensive analysis of the energy consumption data, exploring various aspects 
+                such as temporal trends, geographical patterns, and seasonal variations.
+            </p>
+            <h3>Temporal Analysis</h3>
+            <p>
+                Temporal analysis examines how energy consumption varies over time, including daily, monthly, and yearly trends.
+            </p>
+            <ul>
+                <li>Analysis of energy consumption by day of the week reveals which days exhibit the highest and lowest usage.</li>
+                <li>Monthly analysis identifies patterns in energy consumption throughout the year, highlighting months with 
+                    peak demand.</li>
+                <li>Yearly trends provide insights into long-term consumption patterns and potential growth trends.</li>
+            </ul>
+            <h3>Spatial Analysis</h3>
+            <p>
+                Spatial analysis investigates geographical patterns in energy consumption, exploring variations 
+                across states, regions, and clusters.
+            </p>
+            <ul>
+                <li>State-wise analysis compares energy consumption levels, identifying states with the highest and lowest usage.</li>
+                <li>Regional analysis examines consumption patterns across different geographic regions to uncover regional disparities.</li>
+                <li>Cluster analysis identifies spatial clusters of high and low energy consumption, aiding in targeted policy interventions.</li>
+            </ul>
+            <h3>Seasonal Analysis</h3>
+            <p>
+                Seasonal analysis studies how energy consumption changes with the seasons, considering factors such as weather and 
+                climate variations.
+            </p>
+            <ul>
+                <li>Analysis of energy consumption by season reveals seasonal trends and peak demand periods.</li>
+                <li>Understanding seasonal variations helps utilities and policymakers better allocate resources and plan for 
+                    infrastructure upgrades.</li>
+            </ul>
+            <h3>Exploratory Data Visualization</h3>
+            <p>
+                Data visualization techniques such as histograms, bar plots, and line plots are used to visually explore 
+                energy consumption patterns and relationships between variables.
+            </p>
+            <ul>
+                <li>Histograms provide insights into the distribution of energy consumption, highlighting any skewness or outliers.</li>
+                <li>Bar plots visualize energy consumption trends by different categories such as day of the week, month, state, 
+                    region, and season.</li>
+                <li>Line plots illustrate temporal trends in energy consumption over time, allowing for trend analysis and forecasting.</li>
+            </ul>
+            <h3>Analytics</h3>
+            <div class="analytics-images">
+                <img src="/static/Images/A1.png" alt="Temporal Analysis" width="900">
+                <img src="/static/Images/A2.png" alt="Spatial Analysis" width="900">
+                <img src="/static/Images/A3.png" alt="Seasonal Analysis" width="900">
+                <img src="/static/Images/A4.png" alt="Exploratory Visualization 1" width="900">
+                <img src="/static/Images/A5.png" alt="Exploratory Visualization 2" width="900">
+                <img src="/static/Images/A6.png" alt="Exploratory Visualization 1" width="900">
+                <img src="/static/Images/A7.png" alt="Exploratory Visualization 1" width="900">
+            </div>
+        </section>     
+        
+
+
+        <section id="linear-regression" class="section-block">
+            <h2 class="heading">Model Building</h2>
+
+            <h2>Linear Regression</h2>
+            <p>
+                Linear regression is a statistical method used to model the relationship between a dependent variable and one 
+                or more independent variables. In the context of energy consumption prediction, linear regression can be applied 
+                to predict energy usage based on various features such as state, region, day of the week, and quarter.
+            </p>
+            <h3>Data Preparation</h3>
+            <p>
+                In the linear regression model, the dataset is divided into features (independent variables) and the target 
+                variable (dependent variable). Categorical features like states and regions are one-hot encoded to convert 
+                them into a format suitable for regression. The data is then split into training and testing sets to train 
+                and evaluate the model's performance.
+            </p>
+            <h3>Model Training</h3>
+            <p>
+                The linear regression model is initialized and fitted to the training data. During training, the model learns 
+                the coefficients for each feature, which represent the strength and direction of the relationship between 
+                the features and the target variable.
+            </p>
+            <h3>Model Evaluation</h3>
+            <p>
+                After training, the model's performance is evaluated using various metrics such as root mean squared error (RMSE), 
+                mean absolute error (MAE), R-squared (R²), mean absolute percentage error (MAPE), and explained variance score. 
+                These metrics provide insights into how well the model predicts energy consumption.
+            </p>
+            <h3>Actual vs Predicted Values</h3>
+            <p>
+                A plot of actual versus predicted energy consumption values visually compares the model's predictions with the 
+                actual values from the testing dataset. This plot helps assess the accuracy of the linear regression model and 
+                identify any patterns or discrepancies between the predicted and actual values.
+            </p>
+            <div class="plot-image">
+                <img src="/static/Images/model1.png" alt="Actual vs Predicted Energy Consumption" width="700">
+            </div>
+        </section>
+        
+
+        <section id="neural-network" class="section-block">
+            <h2>Neural Network</h2>
+            <p>
+                A neural network is a computational model inspired by the structure and function of the human brain. In the 
+                context of energy consumption prediction, neural networks can be used to capture complex relationships between 
+                input features and energy usage.
+            </p>
+            <h3>Data Preparation</h3>
+            <p>
+                Similar to linear regression, the dataset is prepared by dividing it into features and the target variable. 
+                Categorical features are one-hot encoded, and the data is split into training and testing sets. Additionally, 
+                the features are standardized to ensure that they have a similar scale.
+            </p>
+            <h3>Model Architecture</h3>
+            <p>
+                The neural network model consists of multiple layers of neurons, including input, hidden, and output layers. 
+                In the code implementation, a sequential model with dense layers is used. The activation function 'relu' is 
+                applied to the hidden layers to introduce non-linearity, while the output layer uses a linear activation 
+                function since the target variable is continuous.
+            </p>
+            <h3>Model Training</h3>
+            <p>
+                The model is compiled with the 'adam' optimizer and mean squared error loss function. It is then trained on 
+                the training data for a specified number of epochs. During training, the model adjusts its weights to minimize 
+                the prediction error.
+            </p>
+            <h3>Model Evaluation</h3>
+            <p>
+                After training, the model's performance is evaluated using metrics such as RMSE, MAE, R², MAPE, and explained 
+                variance score. These metrics provide insights into the accuracy and generalization ability of the neural network 
+                model.
+            </p>
+            <h3>Actual vs Predicted Values</h3>
+            <p>
+                Similar to linear regression, a plot of actual versus predicted energy consumption values is generated to visually 
+                compare the model's predictions with the actual values from the testing dataset. This plot helps assess the 
+                performance of the neural network model.
+            </p>
+            <div class="plot-image">
+                <img src="/static/Images/model2.png" alt="Actual vs Predicted Energy Consumption" width="700">
+            </div>
+        </section>        
+
+        <section id="randomforest-regressor" class="section-block">
+            <h2>Random Forest Regressor</h2>
+            <p>
+                The Random Forest Regressor is an ensemble learning method that combines multiple decision trees to make 
+                predictions. It works by constructing a multitude of decision trees during training and outputting the average 
+                prediction of the individual trees.
+            </p>
+            <h3>Data Preparation</h3>
+            <p>
+                Similar to other models, the dataset is prepared by dividing it into features and the target variable. 
+                Categorical features are one-hot encoded, and the data is split into training and testing sets.
+            </p>
+            <h3>Model Training</h3>
+            <p>
+                The Random Forest Regressor model is initialized with a specified number of decision trees (n_estimators). 
+                The model is then trained on the training data, where each decision tree is fitted to a random subset of 
+                the training data.
+            </p>
+            <h3>Model Evaluation</h3>
+            <p>
+                After training, the model's performance is evaluated using metrics such as RMSE, MAE, R², MAPE, and explained 
+                variance score. These metrics provide insights into the accuracy and generalization ability of the Random Forest 
+                Regressor model.
+            </p>
+            <h3>Actual vs Predicted Values</h3>
+            <p>
+                Similar to other regression models, a plot of actual versus predicted energy consumption values is generated 
+                to visually compare the model's predictions with the actual values from the testing dataset. This plot helps 
+                assess the performance of the Random Forest Regressor model.
+            </p>
+            <div class="plot-image">
+                <img src="/static/Images/model3.png" alt="Actual vs Predicted Energy Consumption" width="700">
+            </div>
+        </section>        
+
+        <section id="lstm" class="section-block">
+            <h2>LSTM (Long Short-Term Memory)</h2>
+            <p>
+                LSTM is a type of recurrent neural network (RNN) architecture capable of learning long-term dependencies. 
+                It is well-suited for sequence prediction tasks such as time series forecasting.
+            </p>
+            <h3>Data Preparation</h3>
+            <p>
+                In the LSTM section, the dataset is prepared differently compared to other models. The 'States' column 
+                is one-hot encoded, and the 'year' column is added as a feature. The dataset is then split into training 
+                and testing sets.
+            </p>
+            <h3>Model Training</h3>
+            <p>
+                The LSTM model is defined using the Keras Sequential API. It consists of an LSTM layer with 50 units 
+                and a Dense output layer. The model is compiled with the Adam optimizer and mean squared error loss 
+                function. It is then trained on the training data with 50 epochs and a batch size of 32.
+            </p>
+            <h3>Model Evaluation</h3>
+            <p>
+                After training, the LSTM model's performance is evaluated using various metrics such as RMSE, MAE, R², 
+                MAPE, and explained variance score. These metrics provide insights into the model's accuracy and ability 
+                to generalize to unseen data.
+            </p>
+            <h3>Actual vs Predicted Values</h3>
+            <p>
+                Finally, a plot of actual versus predicted energy consumption values is generated to visually assess 
+                the LSTM model's performance. This plot helps understand how well the model predicts energy consumption 
+                over time.
+            </p>
+            <div class="plot-image">
+                <img src="/static/Images/model4.png" alt="Actual vs Predicted Energy Consumption" width="700">
+            </div>
+        </section>
+
+        <section id="conclusion" class="section-block">
+            <h2>Conclusion</h2>
+            <p>
+                The Energy Consumption Forecasting Project successfully developed and evaluated predictive models to forecast energy usage patterns. By leveraging historical data and applying advanced machine learning techniques, the project provided valuable insights into temporal, spatial, and seasonal variations in energy consumption.
+            </p>
+            <p>
+                The Random Forest model demonstrated the best performance among the evaluated algorithms, making it a robust choice for accurate energy forecasting. The insights gained from this project can aid policymakers, utilities, and other stakeholders in optimizing energy resource allocation and improving efficiency.
+            </p>
+            <p>
+                Future work can focus on incorporating additional data sources, such as weather data and economic indicators, to further enhance model accuracy. Additionally, developing real-time forecasting systems can provide timely insights for dynamic energy management.
+            </p>
+        </section>
+    
+    </main>
+    <footer>
+        <p>© 2024 Energy Consumption Forecasting Project. All rights reserved.</p>
+    </footer>
+    <!-- Include any necessary JavaScript files -->
+    <script src="script.js"></script>
+</body>
+</html>
