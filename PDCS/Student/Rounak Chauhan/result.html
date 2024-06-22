@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://th.bing.com/th/id/R.4d5567684bacbb3eff37f1ce87976d2c?rik=B7D1EGGsg7DNMw&riu=http%3a%2f%2fwonderfulengineering.com%2fwp-content%2fuploads%2f2014%2f09%2fGreen-Wallpaper-27.jpg&ehk=JUEBt8nJLtpXtDAobK5xsHkBwbnglRObZ5fMNVimgPQ%3d&risl=&pid=ImgRaw&r=0');
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            min-height: 250px;
+            width: 450px;
+            border-radius: 1rem;
+            background: rgb(255, 255, 255, 0.3);
+            padding: 1.5rem;
+            color: #fff;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .result, .image-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+        .result p {
+            font-size: 18px;
+            color: #000;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction Result</h1>
+        <div class="result">
+            <p>Result: {{ result }}</p>
+        </div>
+        <div class="image-container">
+            <img src="{{ url_for('uploaded_file', filename=image_path) }}" alt="Uploaded Image">
+        </div>
+        <a href="{{ url_for('detail', disease=result) }}">View Details</a>
+        <a href="/">Go Back</a>
+    </div>
+</body>
+</html>
