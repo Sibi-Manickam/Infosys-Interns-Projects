@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Page</title>
+    <style>
+        /* CSS styles go here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('static/images/energy.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Send to back */
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto; /* Center the containers */
+        }
+        .team-member {
+            background-color: rgba(255, 255, 255, 0.7); /* Light opacity background */
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .team-member h2 {
+            margin-top: 0;
+        }
+        .team-member p {
+            margin: 5px 0;
+        }
+        .heading {
+            text-align: center;
+            color: #333;
+            font-size: 40px;
+            margin-top: 20px;
+        }
+         .header {
+            position: absolute;
+            top: 20px;
+            right: 350px;
+            z-index: 2;
+        }
+        .header a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .header a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/">Home</a>
+        <a href="about">About</a>
+    </div>
+    <div class="background"></div>
+    <h1 class="heading">TEAM 3</h1>
+    <div class="container">
+        <div class="team-member">
+            <h2>Srija Chakraborty</h2>
+            <p>College: Techno Main, Salt Lake</p>
+            <p>Department: Computer Science and Engineering (Data Science)</p>
+            <p>Email: srijachakraborty123@gmail.com</p>
+        </div>
+        <div class="team-member">
+            <h2>Asmita Patnaik</h2>
+            <p>College: KIIT University</p>
+            <p>Department: Computer Science and Engineering</p>
+            <p>Year: 4th Year</p>
+            <p>Email: asmitapatnaik07@gmail.com</p>
+        </div>
+        <div class="team-member">
+            <h2>Navyasri Karri</h2>
+            <p>College: Pragati Engineering College</p>
+            <p>Department: Computer Science</p>
+            <p>Year: 4th Year</p>
+            <p>Email: karrinavyasri2003@gmail.com</p>
+        </div>
+        <div class="team-member">
+            <h2>CH Harika</h2>
+            <p>College: GITAM University</p>
+            <p>Department: Computer Science Engineering</p>
+            <p>Year: 4th Year</p>
+            <p>Email: chintalaharika5@gmail.com</p>
+        </div>
+        <div class="team-member">
+            <h2>Aayush Gupta </h2>
+            <p>G.H Raisoni College of engineering, Nagpur</p>
+            <p>Department: Artificial intelligence </p>
+            <p>Year: 2nd </p>
+            <p>Email: aayush.gupta.ai@ghrce.raisoni.net</p>
+        </div>
+    </div>
+</body>
+</html>
