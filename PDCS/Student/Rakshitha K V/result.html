@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Prediction Result</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('https://treeplantation.com/images/articles/tree-leaves.png') no-repeat center center fixed;
+      background-size: cover;
+      overflow: scroll;
+      color: #333;
+    }
+    .background-blur {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      filter: blur(5px);
+      z-index: -1;
+    }
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2.5em;
+      color: #2c3e50;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    .card {
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .result-image {
+      max-width: 60%;
+      height: auto;
+      margin: auto;
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .image-container {
+      margin-bottom: 20px;
+    }
+    .image-container img {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .prediction-container {
+      width: 100%;
+      max-width: 500px;
+      overflow-x: auto;
+    }
+    .prediction-container h2 {
+      margin-bottom: 10px;
+      font-size: 1.5em;
+      color: #2c3e50;
+    }
+    .prediction-container table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .prediction-container th, .prediction-container td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .prediction-container th {
+      background-color: #f2f2f2;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #555;
+    }
+    .btn-try-another {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .btn-try-another:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="background-blur"></div>
+  <div class="container">
+    <h1 class="text-center mb-4">Prediction Result</h1>
+    <div class="card text-center">
+      <div class="content">
+        <div class="image-container">
+          <img src="{{ url_for('display_image', filename=filename) }}" class="img-fluid result-image" alt="Plant Image">
+        </div>
+        <div class="prediction-container">
+          <h2 class="mt-4">Predicted Class: {{ predicted_class }}</h2>
+          <h3>Confidence: {{ confidence }}%</h3>
+        </div>
+      </div>
+      <a href="/" class="btn-try-another mt-4">Try Another Image</a>
+    </div>
+    <footer class="footer">
+      <p>&copy; Team-4 [Amit, Rakshita, Tanishk]</p>
+    </footer>
+  </div>
+</body>
+</html>
