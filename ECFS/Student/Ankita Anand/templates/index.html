@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Energy Consumption Dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="intro">
+        <h1>Welcome to the Energy Consumption Dashboard!</h1>
+        <p>This dashboard provides forecasts for energy consumption based on historical data.</p>
+        <p>Please select one of the following options:</p>
+        <button id="specific-date-btn">Forecast for a Specific Date and State</button>
+        <button id="long-term-btn">Long Term Forecast</button>
+        <button id="comparative-btn">Comparative Forecast for States</button>
+    </div>
+    
+    <div id="specific-date-form" style="display: none;">
+        <form id="specific-date-forecast-form">
+            <label for="state">Select a state:</label>
+            <select id="state" name="state">
+                {% for state in states %}
+                    <option value="{{ state }}">{{ state }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="data_type">Select data type:</label>
+            <select id="data_type" name="data_type">
+                <option value="energy_met">Energy Met</option>
+                <option value="max_demand">Maximum Demand</option>
+            </select>
+            <br>
+            <label for="specific_date">Enter Specific Date for Forecast:</label>
+            <input type="date" id="specific_date" name="specific_date">
+            <br>
+            <button type="submit">Get Forecast</button>
+        </form>
+    </div>
+    
+    <div id="long-term-form" style="display: none;">
+        <form id="long-term-forecast-form">
+            <label for="state">Select a state:</label>
+            <select id="state" name="state">
+                {% for state in states %}
+                    <option value="{{ state }}">{{ state }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="forecast_horizon">Select Forecast Horizon:</label>
+            <select id="forecast_horizon" name="forecast_horizon">
+                <option value="1">1 Year</option>
+                <option value="3">3 Years</option>
+                <option value="5">5 Years</option>
+            </select>
+            <br>
+            <label for="data_type">Select data type:</label>
+            <select id="data_type" name="data_type">
+                <option value="energy_met">Energy Met</option>
+                <option value="max_demand">Maximum Demand</option>
+            </select>
+            <br>
+            <button type="submit">Get Forecast</button>
+        </form>
+    </div>
+    
+    <div id="comparative-form" style="display: none;">
+        <form id="comparative-forecast-form">
+            <label for="compare_states">Select States for Comparison:</label>
+            <select id="compare_states" name="compare_states" multiple>
+                {% for state in states %}
+                    <option value="{{ state }}">{{ state }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="data_type">Select data type:</label>
+            <select id="data_type" name="data_type">
+                <option value="energy_met">Energy Met</option>
+                <option value="max_demand">Maximum Demand</option>
+            </select>
+            <br>
+            <button type="submit">Get Forecast</button>
+        </form>
+    </div>
+
+    <div id="plot">
+        <!-- Plot will be inserted here -->
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#specific-date-btn').click(function() {
+                $('#intro').hide();
+                $('#specific-date-form').show();
+            });
+            
+            $('#long-term-btn').click(function() {
+                $('#intro').hide();
+                $('#long-term-form').show();
+            });
+            
+            $('#comparative-btn').click(function() {
+                $('#intro').hide();
+                $('#comparative-form').show();
+            });
+            
+            $('form').submit(function(event) {
+                event.preventDefault();
+                var form_data = $(this).serializeArray();
+                $.ajax({
+                    url: '/forecast',
+                    type: 'POST',
+                    data: form_data,
+                    success: function(response) {
+                        $('#plot').html('<img src="data:image/png;base64,' + response.plot_url + '"/>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Energy Consumption Dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+          background-image: url('{{ url_for("static", filename="Images/bg3.jpg") }}');
+          background-color: #fff;
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          height: 100%;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin: 0;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center; /* Vertically center child elements */
+          min-height: 100vh; /* Set minimum body height for full-screen view */
+        }
+    
+        h1 {
+          text-align: center;
+          margin-bottom: 20px;
+          padding-top: 20px; /* Add padding to avoid overlap */
+          color: #29327a;
+        }
+    
+        .form-container {
+          display: flex; /* Make the container a flex container */
+          justify-content: center; /* Center content horizontally */
+          max-width: 500px; /* Set optional maximum width for the form */
+        }
+    
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          justify-content: center; /* Center form elements vertically */
+          background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background for form */
+          padding: 20px; /* Add padding inside the form */
+          border-radius: 10px; /* Rounded corners for the form */
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for the form */
+        }
+    
+        label {
+          margin-bottom: 5px;
+          color: #555;
+        }
+    
+        select, input[type="date"] {
+          padding: 10px;  /* Increase padding for better aesthetics */
+          border: 1px solid #ccc; /* Lighter border color */
+          border-radius: 5px; /* Slightly rounded corners */
+          width: 100%;  /* Full width for better alignment */
+          box-sizing: border-box;
+          background-color: white;  /* White background for fields */
+          font-size: 0.9em;  /* Reduce font size slightly */
+          background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background for dropdown */
+        }
+    
+        select {
+          appearance: none; /* Remove the default arrow */
+          padding-right: 30px; /* Add space for custom arrow */
+          background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="%23555"><path d="M8.854 10.354a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L8 9.293l2.146-2.147a.5.5 0 0 1 .708.708l-3 3z"/><path d="M8 4a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4z"/></svg>'); /* Custom arrow */
+          background-repeat: no-repeat;
+          background-position: right 10px center;
+          background-size: 16px 16px;
+          cursor: pointer;
+        }
+    
+        select:hover {
+          border-color: #666; /* Darker border on hover */
+        }
+    
+        select:focus {
+          border-color: #3498db; /* Blue border on focus */
+          outline: none; /* Remove default focus outline */
+        }
+    
+        input[type="date"]::-webkit-inner-spin-button,
+        input[type="date"]::-webkit-calendar-picker-indicator {
+          display: none; /* Hide the date picker arrow */
+          -webkit-appearance: none;
+        }
+    
+        button {
+          background-color: #405ab1; /* Blue background for button */
+          color: white;
+          border: none;
+          cursor: pointer;
+          transition: background-color 0.3s, transform 0.2s; /* Transition for hover and active effects */
+          padding: 10px 20px; /* Adjust button size */
+          margin: 0 auto;  /* Center the button horizontally */
+          border-radius: 20px; /* Rounded edges */
+          font-size: 1em; /* Increase font size */
+        }
+    
+        button:hover {
+          background-color: #35508c; /* Darker blue on hover */
+          transform: scale(1.05); /* Slightly enlarge the button on hover */
+        }
+    
+        button:active {
+          background-color: #29327a; /* Even darker blue on click */
+          transform: scale(0.95); /* Slightly shrink the button on click */
+        }
+    
+        p {
+          font-size: 1em; /* Increase font size for historical data */
+          margin: 0;
+          color: #585858;
+        }
+    
+        #plot {
+          margin-top: 20px;
+          text-align: center;
+          opacity: 0; /* Initially hidden */
+          transition: opacity 0.5s ease; /* Fade in transition */
+        }
+    
+        #plot.show {
+          opacity: 1; /* Show with transition */
+        }
+      </style>
+</head>
+<body>
+    <h1>Energy Consumption Dashboard</h1><br>
+    <form id="forecast-form">
+        <label for="state">Select a state:</label>
+        <select id="state" name="state">
+            {% for state in states %}
+                <option value="{{ state }}">{{ state }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="data_type">Select data type:</label>
+        <select id="data_type" name="data_type">
+            <option value="energy_met">Energy Met</option>
+            <option value="max_demand">Maximum Demand</option>
+        </select>
+        <br>
+        <p>Historical data is available uptil 22-May-2024.<br> For future forecast please enter a date beyond this.</p>
+        <label for="specific_date">Enter Date:</label>
+            <input type="date" id="end_date" name="end_date" min="2020-01-01" value="2020-01-01">
+        <br>
+        <button type="submit">Get Forecast</button>
+    </form>
+    <div id="plot">
+        <!-- Plot will be inserted here -->
+    </div>
+
+
+
+    <script>
+        $(document).ready(function() {
+            $('#forecast-form').on('submit', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/forecast',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#plot').html('<img src="data:image/png;base64,' + response.plot_url + '"/>');
+                        $('#plot').addClass('show'); // Add 'show' class to make plot visible
+                        // Scroll to the plot
+                        $('html, body').animate({
+                            scrollTop: $('#plot').offset().top
+                        }, 800);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
