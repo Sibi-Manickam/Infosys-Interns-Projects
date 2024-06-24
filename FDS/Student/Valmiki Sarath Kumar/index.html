@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection Input Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://repository-images.githubusercontent.com/30638861/69d68700-6af9-11eb-93e9-1437548bbdae');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fraud Detection Form</h1>
+        <form action="/process_form" method="post">
+            <label for="step">Step:</label>
+            <input type="number" id="step" name="step" step="0.01" required>
+
+            <label for="type">Transaction Type:</label>
+            <select id="type" name="type" required>
+                <option value="CASH_IN">CASH_IN</option>
+                <option value="CASH_OUT">CASH_OUT</option>
+                <option value="DEBIT">DEBIT</option>
+                <option value="PAYMENT">PAYMENT</option>
+                <option value="TRANSFER">TRANSFER</option>
+            </select>
+
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" step="0.01" required>
+
+            <label for="nameDest">Destination Name:</label>
+            <input type="text" id="nameDest" name="nameDest" required>
+
+            <label for="balanceDiffOrig">Balance Difference Origin:</label>
+            <input type="number" id="balanceDiffOrig" name="balanceDiffOrig" step="0.01" required>
+
+            <label for="balanceDiffDest">Balance Difference Destination:</label>
+            <input type="number" id="balanceDiffDest" name="balanceDiffDest" step="0.01" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
