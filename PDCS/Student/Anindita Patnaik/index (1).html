@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            margin-top: 10%;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .upload-section, .result-section {
+            margin: 20px 0;
+        }
+        .upload-section input[type="file"] {
+            display: block;
+            margin: 10px 0;
+        }
+        .upload-section button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-section button:hover {
+            background-color: #218838;
+        }
+        .result-section img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        .result-section p {
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Plant Disease Detection<br></h1>
+
+        <div class="upload-section">
+            <form id="upload-form" action="/predict" method="post" enctype="multipart/form-data">
+                <label for="image-upload">Upload an image of the plant leaf:<br></label>
+                
+                <input type="file" id="image-upload" name="image" accept="image/*" required>
+                <button type="submit">Detect Disease<br></button>
+            </form>
+            
+        </div>
+
+        <div class="result-section" id="result-section" style="display: none;">
+            <h2>Detection Result:</h2>
+            <img id="uploaded-image" src="" alt="Uploaded Plant Leaf">
+            <p id="prediction-result"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    const fileInput = document.getElementById('image-upload');
+                    const file = fileInput.files[0];
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('uploaded-image').src = e.target.result;
+                        document.getElementById('result-section').style.display = 'block';
+                        document.getElementById('prediction-result').textContent = 'Prediction: ' + data.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
+</body>
+</html>
