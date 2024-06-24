@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap');
+
+        body {
+            font-family: "DM Serif Text", serif;;
+            background-color: #f4f4f9;
+            font-weight: 400;
+            font-style: normal;
+            margin: 0;
+            padding: 0;
+            background-image: url('{{ url_for('static', filename='images/1.jpg') }}'); /* Correct relative path */
+            background-size: cover; /* Makes the image cover the entire background */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+            
+        }
+        .container {
+            max-width: 800px; /* Increased max-width */
+            margin: 40px auto;
+            
+            padding: 40px; /* Increased padding */
+            background-color: rgba(255, 255, 255, 0.5); /* White background with 80% opacity */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .upload-section, .result-section {
+            margin: 20px 0;
+        }
+        .upload-section input[type="file"] {
+            display: block;
+            margin: 10px 0;
+        }
+        .upload-section button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-section button:hover {
+            background-color: #218838;
+        }
+        .result-section img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        .result-section p {
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Plant Disease Detection<br></h1>
+
+        <div class="upload-section" style = "margin-left: 250px">
+            <form id="upload-form" action="/predict" method="post" enctype="multipart/form-data">
+                <label for="image-upload">Upload an image of the plant leaf:<br></label>
+                
+                <input type="file" id="image-upload" name="image" accept="image/*" required>
+                <button type="submit">Detect Disease<br></button>
+            </form>
+            
+        </div>
+
+        <div class="result-section" id="result-section" style="display: none;">
+            <h2>Detection Result:</h2>
+            <img id="uploaded-image" src="" alt="Uploaded Plant Leaf">
+            <p id="prediction-result" style = "font-weight: bold; color: black"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    const fileInput = document.getElementById('image-upload');
+                    const file = fileInput.files[0];
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('uploaded-image').src = e.target.result;
+                        document.getElementById('result-section').style.display = 'block';
+                        document.getElementById('prediction-result').textContent = 'Prediction: ' + data.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
+</body>
+</html>
