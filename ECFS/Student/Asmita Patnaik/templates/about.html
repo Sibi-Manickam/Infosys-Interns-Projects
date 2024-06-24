@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('static/images/energy.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        .header {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 2;
+        }
+        .header a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .header a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 0;
+            overflow-y: auto; /* Added */
+            max-height: 80vh; /* Added */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .small-image {
+            width: 100%;
+            height: auto;
+        }
+        .header {
+            position: absolute;
+            top: 20px;
+            right: 350px;
+            z-index: 2;
+        }
+        .header a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .header a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/">Home</a>
+        <a href="contact">Contact</a>
+    </div>
+    <div class="container">
+        <h1>About</h1>
+        <div class="section">
+            <h2>Data Preprocessing</h2>
+            <p>Library Importation: Essential libraries such as Pandas for data manipulation, Seaborn for visualization, and Matplotlib for plotting were imported.</p>
+            <p>Data Loading: The dataset 'Statewise Consumption.csv' was loaded into the environment. It contains the following attributes:
+            <ul>
+                <li>States</li>
+                <li>Regions</li>
+                <li>Latitude</li>
+                <li>Longitude</li>
+                <li>Dates</li>
+                <li>Usage</li>
+            </ul>
+            </p>
+            <p>Data Cleaning:</p>
+            <ul>
+                <li>Missing Values Handling: Any missing values in the dataset were addressed.</li>
+                <li>Duplicate Removal: Duplicated entries within the dataset were identified and removed.</li>
+
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Feature Engineering</h2>
+            <p>Temporal Feature Extraction: The 'Dates' column was processed to derive additional features like year, month, quarter, and day of the week.</p>
+            <p>Categorical Encoding: Categorical features were encoded using one-hot encoding for further analysis.</p>
+        </div>
+        <p>Exploratory Data Analysis (EDA):</p>
+        <ul>
+            <li>Usage Distribution Analysis:</li>
+            <img src="static/images/1.png" alt="Usage Distribution Analysis" class="small-image">
+            <p>Statewise usage distribution over time was analyzed to identify trends and patterns in electricity consumption.</p>
+
+            <li>Statewise Usage Analysis:</li>
+            <img src="static/images/2.png" alt="Statewise Usage Analysis" class="small-image">
+            <img src="static/images/3.png" alt="Consumption Variation Analysis" class="small-image">
+            <img src="static/images/4.png" alt="Seasonal Consumption Patterns" class="small-image">
+
+            <p>Monthly, quarterly, and yearly usage patterns were explored for each state individually.</p>
+
+            <li>Consumption Variation Analysis:</li>
+            <img src="static/images/5.png" alt="Seasonal Consumption Patterns" class="small-image">
+            <p>Variations in consumption across different regions on yearly basis were examined to identify trends and patterns.</p>
+
+            <li>Seasonal Consumption Patterns:</li>
+            <img src="static/images/6.png" alt="Seasonal Consumption Patterns" class="small-image">
+            <p>Seasonal consumption patterns were investigated to understand how usage varies throughout the year.</p>
+
+            <li>Day of the Week Analysis:</li>
+            <img src="static/images/7.png" alt="Day of the Week Analysis" class="small-image">
+            <p>The impact of the day of the week on consumption variation was analyzed to uncover any significant trends.</p>
+        </ul>
+
+        <div class="section">
+            <h2>Model Building and Evaluation</h2>
+            <p>Prophet Model Utilization: The Prophet model was employed for electricity usage forecasting, providing insights into future consumption for each state.</p>
+            <p>Prophet Model Evaluation: Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE) were calculated to assess the performance of the Prophet model.</p>
+            <p>LSTM Model Implementation: Long Short-Term Memory (LSTM) models were developed to forecast usage, offering an alternative approach to forecasting.</p>
+            <p>LSTM Model Evaluation: The performance of the LSTM models was evaluated using MAE and RMSE metrics, providing insights into their accuracy and reliability.</p>
+        </div>
+    </div>
+</body>
+</html>
