@@ -40,7 +40,7 @@ main index / starting page is "FSD_Landing-main"
 * get model files 
   (the model files are big and need to be downloaded separately and placed in resources folder 
   
-download here "https://github.com/dev-S-t/fsd-v2/tree/main/resources" 
+download here "https://github.com/Ishita2416/fsd-v2/tree/main/resources" 
 required 
 * knn_model.pkl 
 * neural_network_model.h5 
